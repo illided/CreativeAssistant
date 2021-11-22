@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">CreativeAssistant</string>
+    <string name="test_elephant_small">Слон</string>
+    <string name="test_elephant_medium">Хочу купить слона прямо сейчас</string>
+    <string name="test_elephant_large">Я имею весьма обьемное желание купить весьма обьемного слона.Вот был бы у меня слон был бы я так счастлив, так счастлив!</string>
+</resources>

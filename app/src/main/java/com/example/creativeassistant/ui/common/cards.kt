@@ -2,19 +2,18 @@ package com.example.creativeassistant.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,22 +47,20 @@ fun GeneratedIdeaCard(modifier: Modifier = Modifier, initialIdea: Idea) {
             elevation = 4.dp,
             modifier = modifier
         ) {
-            Column(Modifier.padding(6.dp)) {
+            Column {
                 Text(
                     "Сгенерированная зелибоба:",
                     fontSize = 13.sp,
                     fontStyle = FontStyle.Italic,
                     color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().padding(8.dp)
                 )
                 Text(
                     initialIdea.generatedFrom,
                     fontSize = 20.sp,
                     fontStyle = FontStyle.Italic,
                     color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                    modifier = Modifier.fillMaxSize().padding(8.dp)
                 )
             }
         }
@@ -86,30 +83,40 @@ fun RedactableUserIdeaCard(
             elevation = 4.dp,
             modifier = modifier
         ) {
-            Column(Modifier.padding(6.dp)) {
-                OutlinedTextField(
-                    label = { Text("Ваша идея", color = MaterialTheme.colors.onBackground) },
+            Column {
+                TextField(
                     value = ideaText,
-                    textStyle = TextStyle(fontSize = 20.sp, fontFamily = FontFamily.Cursive),
+                    textStyle = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
                     onValueChange = {
                         ideaText = it
                         onIdeaChange(it)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
-                OutlinedTextField(
-                    label = {
+                TextField(
+                    placeholder = {
                         Text(
-                            text = "Описание",
+                            "Описание",
+                            fontStyle = FontStyle.Italic,
                             color = MaterialTheme.colors.onBackground
                         )
                     },
+                    textStyle = MaterialTheme.typography.body1,
                     value = descriptionText,
                     onValueChange = {
                         descriptionText = it
                         onDescriptionChange(it)
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
         }
@@ -131,7 +138,7 @@ fun CardPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun RedactableCardPreview() {
     RedactableUserIdeaCard(initialIdea = fakeIdeas[0],

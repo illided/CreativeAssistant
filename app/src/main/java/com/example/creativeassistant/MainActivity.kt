@@ -16,10 +16,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-//@Preview
-//@Composable
-//fun MyPreview() {
-//    IdeaCard(idea = "Купить слона", generatedFrom = "Любовь к слонам у меня с детства!")
-//}

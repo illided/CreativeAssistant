@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.creativeassistant.R
 import com.example.creativeassistant.ui.common.GeneratedIdeaCard
 import com.example.creativeassistant.ui.common.RedactableUserIdeaCard
+import com.example.creativeassistant.ui.common.fakeIdeas
 import com.example.creativeassistant.ui.theme.GeneratedIdeaCardTheme
 import com.example.creativeassistant.ui.theme.LightIndigo
 import com.example.creativeassistant.ui.theme.UserIdeaCardTheme
@@ -41,21 +43,17 @@ fun CardRedactor(
     Column(
         Modifier
             .padding(2.dp)
-            .fillMaxWidth()
-            .scrollable(scrollState, Orientation.Vertical)
+            .fillMaxWidth().verticalScroll(scrollState)
     ) {
         RedactableUserIdeaCard(
-            modifier = Modifier
-                .padding(4.dp)
-                .weight(1f, fill = true),
+            modifier = Modifier.padding(4.dp),
             initialIdea = initialIdea,
             onIdeaChange = onIdeaChange,
             onDescriptionChange = onDescriptionChange
         )
         GeneratedIdeaCard(
-            initialIdea = initialIdea, modifier = Modifier
-                .padding(4.dp)
-                .weight(0.2f, fill = false)
+            initialIdea = initialIdea,
+            modifier = Modifier.padding(4.dp)
         )
     }
 }
@@ -64,11 +62,7 @@ fun CardRedactor(
 @Composable
 fun CardRedactorPreview() {
     CardRedactor(
-        initialIdea = Idea(
-            stringResource(id = R.string.test_elephant_small),
-            stringResource(id = R.string.test_elephant_medium),
-            stringResource(id = R.string.test_elephant_large)
-        ),
+        initialIdea = fakeIdeas.last(),
         onIdeaChange = { println("Idea changed. New: $it") },
         onDescriptionChange = { println("Description changed: $it") })
 }

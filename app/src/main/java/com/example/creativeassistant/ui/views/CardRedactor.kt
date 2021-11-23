@@ -1,7 +1,10 @@
 package com.example.creativeassistant.ui.views
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -9,7 +12,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import com.example.creativeassistant.model.Idea
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -30,18 +36,26 @@ fun CardRedactor(
     onIdeaChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit
 ) {
+    val scrollState = rememberScrollState()
+
     Column(
         Modifier
-            .padding(4.dp)
+            .padding(2.dp)
             .fillMaxWidth()
+            .scrollable(scrollState, Orientation.Vertical)
     ) {
-        GeneratedIdeaCard(initialIdea = initialIdea)
-        Spacer(modifier = Modifier.height(8.dp))
         RedactableUserIdeaCard(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier
+                .padding(4.dp)
+                .weight(1f, fill = true),
             initialIdea = initialIdea,
             onIdeaChange = onIdeaChange,
             onDescriptionChange = onDescriptionChange
+        )
+        GeneratedIdeaCard(
+            initialIdea = initialIdea, modifier = Modifier
+                .padding(4.dp)
+                .weight(0.2f, fill = false)
         )
     }
 }

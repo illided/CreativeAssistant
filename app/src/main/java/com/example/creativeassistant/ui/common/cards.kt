@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,17 +24,17 @@ import com.example.creativeassistant.ui.theme.GeneratedIdeaCardTheme
 import com.example.creativeassistant.ui.theme.UserIdeaCardTheme
 
 @Composable
-fun IdeaCardInList(idea: String, generatedFrom: String, onClick: () -> Unit) {
+fun IdeaCardInList(idea: Idea, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(3.dp)
             .fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.primary
     ) {
-        Text(idea,
+        Text(idea.idea,
             modifier = Modifier
-                .padding(8.dp)
                 .clickable { onClick() }
+                .padding(8.dp)
         )
     }
 }
@@ -42,7 +43,11 @@ fun IdeaCardInList(idea: String, generatedFrom: String, onClick: () -> Unit) {
 @Composable
 fun GeneratedIdeaCard(modifier: Modifier = Modifier, initialIdea: Idea) {
     GeneratedIdeaCardTheme {
-        Card(backgroundColor = MaterialTheme.colors.background, modifier = modifier) {
+        Card(
+            backgroundColor = MaterialTheme.colors.background,
+            elevation = 4.dp,
+            modifier = modifier
+        ) {
             Column(Modifier.padding(6.dp)) {
                 Text(
                     "Сгенерированная зелибоба:",
@@ -56,7 +61,9 @@ fun GeneratedIdeaCard(modifier: Modifier = Modifier, initialIdea: Idea) {
                     fontSize = 20.sp,
                     fontStyle = FontStyle.Italic,
                     color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                 )
             }
         }
@@ -76,13 +83,14 @@ fun RedactableUserIdeaCard(
     UserIdeaCardTheme {
         Card(
             backgroundColor = MaterialTheme.colors.background,
+            elevation = 4.dp,
             modifier = modifier
         ) {
             Column(Modifier.padding(6.dp)) {
                 OutlinedTextField(
                     label = { Text("Ваша идея", color = MaterialTheme.colors.onBackground) },
                     value = ideaText,
-                    textStyle = TextStyle(fontSize = 20.sp),
+                    textStyle = TextStyle(fontSize = 20.sp, fontFamily = FontFamily.Cursive),
                     onValueChange = {
                         ideaText = it
                         onIdeaChange(it)
@@ -114,8 +122,18 @@ fun RedactableUserIdeaCard(
 fun CardPreview() {
     CreativeAssistantTheme {
         IdeaCardInList(
-            idea = "Я считаю необходимым купить слона",
-            generatedFrom = "Ах как я люблю слонов",
+            Idea(
+                idea = "Я считаю необходимым купить слона",
+                generatedFrom = "Ах как я люблю слонов",
+                description = ""
+            ),
             onClick = {})
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RedactableCardPreview() {
+    RedactableUserIdeaCard(initialIdea = fakeIdeas[0],
+        onIdeaChange = {}, onDescriptionChange = {})
 }

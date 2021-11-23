@@ -13,21 +13,20 @@ import com.example.creativeassistant.ui.common.fakeIdeas
 import com.example.creativeassistant.ui.theme.CreativeAssistantTheme
 
 @Composable
-fun CardView(cards: List<Idea>, onClick: (Idea) -> Unit) {
+fun UserCardsList(cards: List<Idea>, onClick: (Int) -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
-        items(cards) { card ->
+        itemsIndexed(cards) { index, card ->
             IdeaCardInList(
-                idea = card.idea,
-                generatedFrom = card.generatedFrom,
-                onClick = { onClick(card) })
+                idea = card,
+                onClick = { onClick(index) })
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CardListPreview() {
     CreativeAssistantTheme {
-        CardView(cards = fakeIdeas, onClick = {})
+        UserCardsList(cards = fakeIdeas, onClick = {})
     }
 }
